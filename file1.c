@@ -3,42 +3,58 @@
 #include <conio.h>
 #include "std_info.h"
                            
-
 int main()
 {
+
     int n;
     printf("Enter the number of data you wish to enter:\n");
-    scanf("%d",&n);
-    char name[n][100];//={"a","b","c","d","e","f","g","h","i","j"};
-    int roll[n];//={1,2,3,4,5,6,7,8,9,10};
-    int semester[n];//={2,2,2,2,2,2,2,2,2,2};
-    
-    int isa1[n][5];// ={20,15,15,17}; (2 student data [2][5])
-    int isa2[n][5];// = {15,17,23,13};
-    int esa[n][5];// ={45,34,25,45};
-    
+    scanf("%d",&n);  
+
+    struct Student *students = (struct Student *)malloc(n * sizeof(struct Student));
+
     char choice='y';
+    int choice2,roll;	
+    char name[50];
+
     while(choice =='y')
 {
     int option;
     printf("1.Entry of Student Information\n");
-    printf("2.Entry of marks\n");
-    printf("3.Display\n");
+    printf("2.Display of Grade Card\n");
     printf("Enter your Choice: ");
     scanf("%d",&option);
 
     switch(option)
     {
-        case 1: std_info(name,roll,semester,n);
+        case 1: std_info(students,n);
         break;
 
-       
-        case 2: exam_entry(isa1,isa2,esa,roll,n);
-        break;
+        case 2: printf("1.Serach by Roll Number\n");
+	printf("2.Search by Name\n");
+	printf("Enter your choice : ");
+	scanf("%d",&choice2);
+	
+	switch (choice2)
+	{
+		case 1: 
+		{
+        	printf("Enter Roll Number to search: ");
+        	scanf("%d", &roll);
+		display(students,n ,roll, NULL);
+		break;}
 
+		case 2: 
+        	{printf("Enter Name to search: ");
+        	scanf("%s", name);
+        	display(students,n, -1, name);
+		break;}
 
-        case 3: grade_calc(name,roll,semester,isa1,isa2,esa,n);
+		default: printf("Invalid Choice\n");
+		break;
+	}
+	
         break;
+	
  	
 	default: printf("Invlaid Choice\n");
 	break;
